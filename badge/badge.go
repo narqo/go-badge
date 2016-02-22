@@ -3,12 +3,12 @@ package badge
 import (
 	"html/template"
 	"io"
-	"io/ioutil"
 	"path/filepath"
 	"sync"
 
 	"github.com/golang/freetype/truetype"
 	"golang.org/x/image/font"
+	"github.com/narqo/go-badge/badge/fonts"
 )
 
 type badgeDrawer struct {
@@ -60,7 +60,6 @@ func Render(subject, status string, color Color, w io.Writer) error {
 const (
 	dpi      = 72
 	fontsize = 11
-	fontfile = "../res/bitstream-vera-sans/Vera.ttf"
 )
 
 func init() {
@@ -68,16 +67,12 @@ func init() {
 }
 
 func setDrawer(d *badgeDrawer) {
-	d.fd = mustNewFontDrawer(fontfile, fontsize, dpi)
+	d.fd = mustNewFontDrawer(fontsize, dpi)
 	drawer = d
 }
 
-func mustNewFontDrawer(fontfile string, size, dpi float64) *font.Drawer {
-	fontBytes, err := ioutil.ReadFile(fontfile)
-	if err != nil {
-		panic(err)
-	}
-	ttf, err := truetype.Parse(fontBytes)
+func mustNewFontDrawer(size, dpi float64) *font.Drawer {
+	ttf, err := truetype.Parse(fonts.VeraSansBytes())
 	if err != nil {
 		panic(err)
 	}
