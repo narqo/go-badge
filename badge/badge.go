@@ -33,7 +33,7 @@ func (d *drawer) render(subject, status string, color Color, w io.Writer) error 
 		"Bounds": map[string]float64{
 			"Dx": subjectDx + statusDx,
 			"SubjectDx": subjectDx,
-			"SubjectX": subjectDx / 2.0,
+			"SubjectX": subjectDx / 2.0 + 1,
 			"StatusDx": statusDx,
 			"StatusX": subjectDx + statusDx / 2.0 - 1,
 		},
@@ -41,8 +41,8 @@ func (d *drawer) render(subject, status string, color Color, w io.Writer) error 
 	return d.tmpl.Execute(w, data)
 }
 
-// shild.io uses Verdana.ttf to measure text width and an extra of 10px.
-// As we use DejaVuSans.ttf, we have to tune this value a little.
+// shield.io uses Verdana.ttf to measure text width and an extra of 10px.
+// As we use Vera.ttf, we have to tune this value a little.
 const extraDx = 13
 
 func (d *drawer) measureString(s string) float64 {
@@ -59,7 +59,7 @@ func Render(subject, status string, color Color, w io.Writer) error {
 const (
 	dpi = 72
 	fontsize = 11
-	fontfile = "../res/dejavu-sans/ttf/DejaVuSans.ttf"
+	fontfile = "../res/bitstream-vera-sans/Vera.ttf"
 )
 
 func init() {
