@@ -3,24 +3,22 @@ package badge
 import (
 	"html/template"
 	"io"
-	"path/filepath"
 	"sync"
 
 	"github.com/golang/freetype/truetype"
-	"golang.org/x/image/font"
 	"github.com/narqo/go-badge/badge/fonts"
+	"golang.org/x/image/font"
 )
 
 type badgeDrawer struct {
-	once     sync.Once
-	fd       *font.Drawer
-	tmplName string
-	tmpl     *template.Template
+	once sync.Once
+	fd   *font.Drawer
+	tmpl *template.Template
 }
 
 func (d *badgeDrawer) Render(subject, status string, color Color, w io.Writer) error {
 	d.once.Do(func() {
-		d.tmpl = template.Must(template.ParseFiles(filepath.Join("../templates", d.tmplName)))
+		d.tmpl = template.Must(template.New("flat-template").Parse(flatTemplate))
 	})
 
 	subjectDx := d.measureString(subject)
@@ -30,7 +28,7 @@ func (d *badgeDrawer) Render(subject, status string, color Color, w io.Writer) e
 		"Subject": subject,
 		"Status":  status,
 		"Color":   color,
-		"Bounds":  map[string]float64{
+		"Bounds": map[string]float64{
 			"Dx":        subjectDx + statusDx,
 			"SubjectDx": subjectDx,
 			"SubjectX":  subjectDx/2.0 + 1,
@@ -63,7 +61,7 @@ const (
 )
 
 func init() {
-	setDrawer(&badgeDrawer{tmplName: "flat-template.svg"})
+	setDrawer(&badgeDrawer{})
 }
 
 func setDrawer(d *badgeDrawer) {
