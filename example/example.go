@@ -11,12 +11,12 @@ import (
 var (
 	subject = flag.String("subject", "", "Badge subject")
 	status = flag.String("status", "", "Badge status")
-	//color = flag.String("color", "red", "Badge color")
+	color = flag.String("color", string(badge.ColorBlue), "Badge color")
 )
 
 func main() {
 	flag.Parse()
-	err := badge.Render(*subject, *status, badge.ColorBlue, os.Stdout)
+	err := badge.Render(*subject, *status, badge.Color(*color), os.Stdout)
 	if err != nil {
 		log.Fatal(err)
 	}
