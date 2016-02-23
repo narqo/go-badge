@@ -3,40 +3,53 @@ package badge
 import (
 	"html/template"
 	"io"
-	"sync"
 
 	"github.com/golang/freetype/truetype"
-	"github.com/narqo/go-badge/badge/fonts"
+	"github.com/narqo/go-badge/fonts"
 	"golang.org/x/image/font"
 )
 
+type badge struct {
+	Subject string
+	Status  string
+	Color   Color
+	Bounds  bounds
+}
+
+type bounds struct {
+	// SubjectDx is the width of subject string of the badge.
+	SubjectDx float64
+	SubjectX  float64
+	// SubjectDx is the width of status string of the badge.
+	StatusDx  float64
+	StatusX   float64
+}
+
+func (b bounds) Dx() float64 {
+	return b.SubjectDx + b.StatusDx
+}
+
 type badgeDrawer struct {
-	once sync.Once
 	fd   *font.Drawer
 	tmpl *template.Template
 }
 
 func (d *badgeDrawer) Render(subject, status string, color Color, w io.Writer) error {
-	d.once.Do(func() {
-		d.tmpl = template.Must(template.New("flat-template").Parse(flatTemplate))
-	})
-
 	subjectDx := d.measureString(subject)
 	statusDx := d.measureString(status)
 
-	data := map[string]interface{}{
-		"Subject": subject,
-		"Status":  status,
-		"Color":   color,
-		"Bounds": map[string]float64{
-			"Dx":        subjectDx + statusDx,
-			"SubjectDx": subjectDx,
-			"SubjectX":  subjectDx/2.0 + 1,
-			"StatusDx":  statusDx,
-			"StatusX":   subjectDx + statusDx/2.0 - 1,
+	bdg := badge{
+		Subject: subject,
+		Status:  status,
+		Color:   color,
+		Bounds: bounds{
+			SubjectDx: subjectDx,
+			SubjectX:  subjectDx / 2.0 + 1,
+			StatusDx:  statusDx,
+			StatusX:   subjectDx + statusDx / 2.0 - 1,
 		},
 	}
-	return d.tmpl.Execute(w, data)
+	return d.tmpl.Execute(w, bdg)
 }
 
 // shield.io uses Verdana.ttf to measure text width with an extra 10px.
@@ -45,10 +58,9 @@ const extraDx = 13
 
 func (d *badgeDrawer) measureString(s string) float64 {
 	sm := d.fd.MeasureString(s)
-	return float64(sm)/64 + extraDx
+	// this 64 is weird but it's the way I've found how to convert fixed.Int26_6 to float64
+	return float64(sm) / 64 + extraDx
 }
-
-var drawer *badgeDrawer
 
 // Render renders a badge of the given color, with given subject and status to w.
 func Render(subject, status string, color Color, w io.Writer) error {
@@ -56,17 +68,17 @@ func Render(subject, status string, color Color, w io.Writer) error {
 }
 
 const (
-	dpi      = 72
+	dpi = 72
 	fontsize = 11
 )
 
-func init() {
-	setDrawer(&badgeDrawer{})
-}
+var drawer *badgeDrawer
 
-func setDrawer(d *badgeDrawer) {
-	d.fd = mustNewFontDrawer(fontsize, dpi)
-	drawer = d
+func init() {
+	drawer = &badgeDrawer{
+		fd:   mustNewFontDrawer(fontsize, dpi),
+		tmpl: template.Must(template.New("flat-template").Parse(flatTemplate)),
+	}
 }
 
 func mustNewFontDrawer(size, dpi float64) *font.Drawer {

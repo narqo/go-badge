@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/narqo/go-badge/badge"
+	"github.com/narqo/go-badge"
 )
 
 var (
