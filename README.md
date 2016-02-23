@@ -1,6 +1,5 @@
 # go-badge [![GoDoc](https://godoc.org/github.com/narqo/go-badge/badge?status.svg)](https://godoc.org/github.com/narqo/go-badge/badge)
 
-
 go-badge is a library to render shield badges to SVG.
 
 ## Installation
@@ -15,15 +14,15 @@ go get github.com/narqo/go-badge
 
 ```go
 import (
-  "os"
-  
-  "github.com/narqo/go-badge/badge"
+	"os"
+
+	"github.com/narqo/go-badge"
 )
 
 func main() {
-  if err := badge.Render("godoc", "reference", "#5272B4", os.Stdout); err != nil {
-    panic(err)
-  }
+	if err := badge.Render("godoc", "reference", "#5272B4", os.Stdout); err != nil {
+		panic(err)
+	}
 }
 ```
 

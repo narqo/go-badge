@@ -2,6 +2,7 @@ package badge
 
 import "strings"
 
+// TODO: Think of using a sort of SVG minifier after template was executed.
 var flatTemplate = strings.TrimSpace(`
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="{{.Bounds.Dx}}" height="20">
   <linearGradient id="smooth" x2="0" y2="100%">
