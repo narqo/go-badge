@@ -1,4 +1,4 @@
-# go-badge [![GoDoc](https://godoc.org/github.com/narqo/go-badge/badge?status.svg)](https://godoc.org/github.com/narqo/go-badge/badge)
+# go-badge [![GoDoc](https://godoc.org/github.com/narqo/go-badge?status.svg)](https://godoc.org/github.com/narqo/go-badge)
 
 go-badge is a library to render shield badges to SVG.
 
