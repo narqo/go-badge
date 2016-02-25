@@ -11,7 +11,7 @@ import (
 var (
 	subject = flag.String("subject", "", "Badge subject")
 	status = flag.String("status", "", "Badge status")
-	color = flag.String("color", string(badge.ColorBlue), "Badge color")
+	color = flag.String("color", "blue", "Badge color")
 )
 
 func main() {
