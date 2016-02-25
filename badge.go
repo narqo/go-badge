@@ -20,7 +20,7 @@ type bounds struct {
 	// SubjectDx is the width of subject string of the badge.
 	SubjectDx float64
 	SubjectX  float64
-	// SubjectDx is the width of status string of the badge.
+	// StatusDx is the width of status string of the badge.
 	StatusDx  float64
 	StatusX   float64
 }
