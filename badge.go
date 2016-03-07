@@ -82,7 +82,7 @@ func init() {
 }
 
 func mustNewFontDrawer(size, dpi float64) *font.Drawer {
-	ttf, err := truetype.Parse(fonts.VeraSansBytes())
+	ttf, err := truetype.Parse(fonts.VeraSans)
 	if err != nil {
 		panic(err)
 	}
