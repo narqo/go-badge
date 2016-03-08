@@ -3,6 +3,7 @@ package badge
 import (
 	"html/template"
 	"io"
+	"sync"
 
 	"github.com/golang/freetype/truetype"
 	"github.com/narqo/go-badge/fonts"
@@ -30,13 +31,16 @@ func (b bounds) Dx() float64 {
 }
 
 type badgeDrawer struct {
-	fd   *font.Drawer
-	tmpl *template.Template
+	fd    *font.Drawer
+	tmpl  *template.Template
+	mutex *sync.Mutex
 }
 
 func (d *badgeDrawer) Render(subject, status string, color Color, w io.Writer) error {
+	d.mutex.Lock()
 	subjectDx := d.measureString(subject)
 	statusDx := d.measureString(status)
+	d.mutex.Unlock()
 
 	bdg := badge{
 		Subject: subject,
@@ -78,6 +82,7 @@ func init() {
 	drawer = &badgeDrawer{
 		fd:   mustNewFontDrawer(fontsize, dpi),
 		tmpl: template.Must(template.New("flat-template").Parse(flatTemplate)),
+		mutex: &sync.Mutex{},
 	}
 }
 
