@@ -1,3 +1,3 @@
 package badge
 
-const VersionString = "v0.2"
+const VersionString = "v0.3"
