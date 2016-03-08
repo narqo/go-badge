@@ -2,4 +2,4 @@ language: go
 go:
   - 1.6
   - tip
-script: go test -v -bench ./...
+script: go test -v -bench=Render -benchmem
