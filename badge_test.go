@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func BenchmarkRender(b *testing.B) {
+func BenchmarkRenderSeq(b *testing.B) {
 	// warm up
 	Render("XXX", "YYY", ColorBlue, ioutil.Discard)
 	b.ResetTimer()
@@ -15,4 +15,15 @@ func BenchmarkRender(b *testing.B) {
 			b.Fatal(err)
 		}
 	}
+}
+
+func BenchmarkRenderParallel(b *testing.B) {
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			err := Render("XXX", "YYY", ColorBlue, ioutil.Discard)
+			if err != nil {
+				b.Fatal(err)
+			}
+		}
+	})
 }
