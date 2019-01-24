@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"log"
 	"os"
 
@@ -10,8 +11,8 @@ import (
 
 var (
 	subject = flag.String("subject", "", "Badge subject")
-	status = flag.String("status", "", "Badge status")
-	color = flag.String("color", "blue", "Badge color")
+	status  = flag.String("status", "", "Badge status")
+	color   = flag.String("color", "blue", "Badge color")
 )
 
 func main() {
@@ -20,4 +21,10 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	badge, err := badge.RenderBytes(*subject, *status, badge.Color(*color))
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("%s", badge)
 }

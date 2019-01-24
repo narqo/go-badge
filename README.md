@@ -13,24 +13,35 @@ go get github.com/narqo/go-badge
 ## Usage
 
 ```go
+package main
+
 import (
+	"fmt"
 	"os"
 
 	"github.com/narqo/go-badge"
 )
 
 func main() {
-	if err := badge.Render("godoc", "reference", "#5272B4", os.Stdout); err != nil {
+	err := badge.Render("godoc", "reference", "#5272B4", os.Stdout)
+	if err != nil {
 		panic(err)
 	}
+
+	badge, err := badge.RenderBytes("godoc", "reference", "#5272B4")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("%s", badge)
 }
+
 ```
 
 Hope `example/` directory will have more examples in future.
 
 ## Contribution and Feedback
 
-Contributing is more than welcome. Create an issue if you ses any problem in the code or send a PR with fixes if you'd like.
+Contributing is more than welcome. Create an issue if you see any problem in the code or send a PR with fixes if you'd like.
 
 ## License
 
