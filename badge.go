@@ -58,24 +58,8 @@ func (d *badgeDrawer) Render(subject, status string, color Color, w io.Writer) e
 }
 
 func (d *badgeDrawer) RenderBytes(subject, status string, color Color) ([]byte, error) {
-	d.mutex.Lock()
-	subjectDx := d.measureString(subject)
-	statusDx := d.measureString(status)
-	d.mutex.Unlock()
-
-	bdg := badge{
-		Subject: subject,
-		Status:  status,
-		Color:   color,
-		Bounds: bounds{
-			SubjectDx: subjectDx,
-			SubjectX:  subjectDx/2.0 + 1,
-			StatusDx:  statusDx,
-			StatusX:   subjectDx + statusDx/2.0 - 1,
-		},
-	}
-	buf := bytes.Buffer{}
-	err := d.tmpl.Execute(&buf, bdg)
+	buf := &bytes.Buffer{}
+	err := d.Render(subject, status, color, buf)
 	return buf.Bytes(), err
 }
 
