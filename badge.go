@@ -68,9 +68,7 @@ func (d *badgeDrawer) RenderBytes(subject, status string, color Color) ([]byte, 
 const extraDx = 13
 
 func (d *badgeDrawer) measureString(s string) float64 {
-	sm := d.fd.MeasureString(s)
-	// this 64 is weird but it's the way I've found how to convert fixed.Int26_6 to float64
-	return float64(sm)/64 + extraDx
+	return float64(d.fd.MeasureString(s)>>6) + extraDx
 }
 
 // Render renders a badge of the given color, with given subject and status to w.
