@@ -1,0 +1,4 @@
+github.com/golang/freetype v0.0.0-20160221112527-9ce4eec92a4b h1:g/ACZ897P/JC5EnPl0nas+CTm7BAXv6QA/5sBxm2Umw=
+github.com/golang/freetype v0.0.0-20160221112527-9ce4eec92a4b/go.mod h1:E/TSTwGwJL78qG/PmXZO1EjYhfJinVAhrmmHX6Z8B9k=
+golang.org/x/image v0.0.0-20160107224602-7c492694a644 h1:gDX87IHVAWzhS+GuswKlPHa5jnZxbtVTojgccecF6Pw=
+golang.org/x/image v0.0.0-20160107224602-7c492694a644/go.mod h1:ux5Hcp/YLpHSI86hEcLt0YII63i6oz57MZXIpbrjZUs=
