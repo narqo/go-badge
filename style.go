@@ -17,7 +17,7 @@ var flatTemplate = stripXmlWhitespace(`
     <rect width="{{.Bounds.Dx}}" height="20" fill="url(#smooth)"/>
   </g>
 
-  <g fill="#fff" text-anchor="middle" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11">
+  <g fill="{{or .LabelColor "#fff" | html}}" text-anchor="middle" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11">
     <text x="{{.Bounds.SubjectX}}" y="15" fill="#010101" fill-opacity=".3">{{.Subject | html}}</text>
     <text x="{{.Bounds.SubjectX}}" y="14">{{.Subject | html}}</text>
     <text x="{{.Bounds.StatusX}}" y="15" fill="#010101" fill-opacity=".3">{{.Status | html}}</text>

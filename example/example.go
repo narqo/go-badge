@@ -17,12 +17,12 @@ var (
 
 func main() {
 	flag.Parse()
-	err := badge.Render(*subject, *status, badge.Color(*color), os.Stdout)
+	err := badge.Render(*subject, *status, "#fff", badge.Color(*color), os.Stdout)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	badge, err := badge.RenderBytes(*subject, *status, badge.Color(*color))
+	badge, err := badge.RenderBytes(*subject, *status, "#fff", badge.Color(*color))
 	if err != nil {
 		panic(err)
 	}

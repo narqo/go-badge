@@ -23,12 +23,12 @@ import (
 )
 
 func main() {
-	err := badge.Render("godoc", "reference", "#5272B4", os.Stdout)
+	err := badge.Render("godoc", "reference", "#fff", "#5272B4", os.Stdout)
 	if err != nil {
 		panic(err)
 	}
 
-	badge, err := badge.RenderBytes("godoc", "reference", "#5272B4")
+	badge, err := badge.RenderBytes("godoc", "reference", "#fff", "#5272B4")
 	if err != nil {
 		panic(err)
 	}
