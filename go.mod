@@ -1,4 +1,4 @@
-module github.com/narqo/go-badge
+module github.com/hawl1/go-badge
 
 go 1.17
 
