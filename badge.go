@@ -65,7 +65,7 @@ func (d *badgeDrawer) RenderBytes(subject, status string, color Color) ([]byte, 
 
 // shield.io uses Verdana.ttf to measure text width with an extra 10px.
 // As we use Vera.ttf, we have to tune this value a little.
-const extraDx = 13
+const extraDx = 3
 
 func (d *badgeDrawer) measureString(s string) float64 {
 	return float64(d.fd.MeasureString(s)>>6) + extraDx
