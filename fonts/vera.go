@@ -6,5 +6,5 @@ import (
 
 // VeraSans is vera.ttf font inlined to the bytes slice.
 //
-//go:embed vera.ttf
+//go:embed verdana.ttf
 var VeraSans []byte
